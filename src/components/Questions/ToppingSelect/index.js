@@ -12,7 +12,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 
-
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -28,6 +27,7 @@ const TreatTypeSelect = ({ rerouteToHome }) => {
   const [route] = useContext(RoutingContext);
   const [answers, dispatch] = useContext(AnswersContext);
   const [topping, setTopping] = useState(answers[route]);
+  const [isOther, setIsOther] = useState(false);
 
   useEffect(() => {
     setTopping(answers[route]);
@@ -38,14 +38,16 @@ const TreatTypeSelect = ({ rerouteToHome }) => {
 
   let question = questions[route] || { choices: [] };
 
-  let selectItems = question.choices.map((choice) => (
-    <MenuItem value={choice}>{choice}</MenuItem>
+  let selectItems = question.choices.map((choice, idx) => (
+    <MenuItem key={idx} value={choice}>
+      {choice}
+    </MenuItem>
   ));
   selectItems.push(<MenuItem value="Other">Other</MenuItem>);
 
   return (
     <>
-      <pre>{question.prompt}</pre>
+      <h2>{question.prompt}</h2>
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-label">Please Select</InputLabel>
         <Select
@@ -54,6 +56,8 @@ const TreatTypeSelect = ({ rerouteToHome }) => {
           value={topping}
           onChange={(e) => {
             setTopping(e.target.value);
+            if (e.target.value === "Other") setIsOther(true);
+            else setIsOther(false);
             dispatch({
               type: "ADD_ANSWER",
               payload: { topping: e.target.value },
@@ -63,9 +67,20 @@ const TreatTypeSelect = ({ rerouteToHome }) => {
           {selectItems}
         </Select>
       </FormControl>
-      {topping === "Other" && <form noValidate autoComplete="off">
-        <TextField id="topping_other" label="Other" />
-      </form>}
+      {isOther && (
+        <form noValidate autoComplete="off">
+          <TextField
+            id="topping_other"
+            label="Other"
+            onChange={(e) => {
+              dispatch({
+                type: "ADD_ANSWER",
+                payload: { topping: e.target.value },
+              });
+            }}
+          />
+        </form>
+      )}
     </>
   );
 };

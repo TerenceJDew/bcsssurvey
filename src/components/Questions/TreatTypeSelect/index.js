@@ -25,7 +25,7 @@ const TreatTypeSelect = ({ rerouteToHome }) => {
   const [questions] = useContext(QuestionsContext);
   const [route] = useContext(RoutingContext);
   const [answers, dispatch] = useContext(AnswersContext);
-  const [treattype, setTreattype] = useState(answers[route] );
+  const [treattype, setTreattype] = useState(answers[route]);
 
   useEffect(() => {
     setTreattype(answers[route]);
@@ -36,12 +36,12 @@ const TreatTypeSelect = ({ rerouteToHome }) => {
 
   let question = questions[route] || { choices: [] };
 
-  let selectItems = question.choices.map((choice) => (
-    <MenuItem value={choice}>{choice}</MenuItem>
+  let selectItems = question.choices.map((choice, idx) => (
+    <MenuItem key={idx} value={choice}>{choice}</MenuItem>
   ));
   return (
     <>
-      <pre>{question.prompt}</pre>
+      <h2>{question.prompt}</h2>
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-label">Please Select</InputLabel>
         <Select

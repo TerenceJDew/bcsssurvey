@@ -4,7 +4,7 @@ import Reducer from "./answersReducer";
 const Store = ({ children }) => {
   const [answer, dispatch] = useReducer(Reducer, {});
   const [questions, setQuestions] = useState([]);
-  const [page, setPage] = useState("treattype");
+  const [page, setPage] = useState("");
   return (
     <RoutingContext.Provider value={[page, setPage]}>
       <AnswersContext.Provider value={[answer, dispatch]}>
@@ -18,5 +18,5 @@ const Store = ({ children }) => {
 
 export const QuestionsContext = createContext([]);
 export const AnswersContext = createContext({});
-export const RoutingContext = createContext("treattype");
+export const RoutingContext = createContext("");
 export default Store;

@@ -12,7 +12,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 
-
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -28,7 +27,7 @@ const ScoopFlavorSelect = ({ rerouteToHome }) => {
   const [route] = useContext(RoutingContext);
   const [answers, dispatch] = useContext(AnswersContext);
   const [scoopflavor, setScoopFlavor] = useState(answers[route]);
- 
+  const [isOther, setIsOther] = useState(false);
 
   useEffect(() => {
     setScoopFlavor(answers[route]);
@@ -39,13 +38,15 @@ const ScoopFlavorSelect = ({ rerouteToHome }) => {
 
   let question = questions[route] || { choices: [] };
 
-  let selectItems = question.choices.map((choice) => (
-    <MenuItem value={choice}>{choice}</MenuItem>
+  let selectItems = question.choices.map((choice, idx) => (
+    <MenuItem key={idx} value={choice}>
+      {choice}
+    </MenuItem>
   ));
   selectItems.push(<MenuItem value="Other">Other</MenuItem>);
   return (
     <>
-      <pre>{question.prompt}</pre>
+      <h2>{question.prompt}</h2>
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-label">Please Select</InputLabel>
         <Select
@@ -54,6 +55,8 @@ const ScoopFlavorSelect = ({ rerouteToHome }) => {
           value={scoopflavor}
           onChange={(e) => {
             setScoopFlavor(e.target.value);
+            if (e.target.value === "Other") setIsOther(true);
+            else setIsOther(false);
             dispatch({
               type: "ADD_ANSWER",
               payload: { scoopflavor: e.target.value },
@@ -63,9 +66,20 @@ const ScoopFlavorSelect = ({ rerouteToHome }) => {
           {selectItems}
         </Select>
       </FormControl>
-      {scoopflavor === "Other" && <form noValidate autoComplete="off">
-        <TextField id="topping_other" label="Other" />
-      </form>}
+      {isOther && (
+        <form noValidate autoComplete="off">
+          <TextField
+            id="topping_other"
+            onChange={(e) =>
+              dispatch({
+                type: "ADD_ANSWER",
+                payload: { scoopflavor: e.target.value },
+              })
+            }
+            label="Other"
+          />
+        </form>
+      )}
     </>
   );
 };

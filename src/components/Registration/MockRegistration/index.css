@@ -1,0 +1,4 @@
+.email-ctr-div, form{
+    text-align: center;
+    flex-direction: column;
+  }
