@@ -1,20 +1,17 @@
-import { useRoutes } from "hookrouter";
-
-import Registration from "./components/Registration";
-import Questions from "./components/Questions";
-import NotFound from "./components/NotFound";
+import React from "react";
+import Container from "./components/Container";
 
 import "./App.css";
 
-const routes = {
-  "/": () => <Registration />,
-  "/survey*": () => <Questions />,
+
+const App = () => {
+  
+  return (
+    <div className="App">
+
+      <Container />
+    </div>
+  );
 };
-
-function App() {
-  const routeResult = useRoutes(routes);
-
-  return <div className="App">{routeResult || <NotFound></NotFound>}</div>;
-}
 
 export default App;

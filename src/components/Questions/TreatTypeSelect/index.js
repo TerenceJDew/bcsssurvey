@@ -1,9 +1,66 @@
+import { makeStyles } from "@material-ui/core/styles";
+import { useContext, useEffect, useState } from "react";
+import {
+  QuestionsContext,
+  RoutingContext,
+  AnswersContext,
+} from "../../../store/store";
 
-const TreatTypeSelect = () => {
-    return (
-        <h1>TreatTypeSelect</h1>
-    )
-  };
-  
-  export default TreatTypeSelect;
-  
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
+const TreatTypeSelect = ({ rerouteToHome }) => {
+  const [questions] = useContext(QuestionsContext);
+  const [route] = useContext(RoutingContext);
+  const [answers, dispatch] = useContext(AnswersContext);
+  const [treattype, setTreattype] = useState(answers[route] );
+
+  useEffect(() => {
+    setTreattype(answers[route]);
+    if (!answers.email) rerouteToHome();
+  }, [answers, route, rerouteToHome]);
+
+  let classes = useStyles();
+
+  let question = questions[route] || { choices: [] };
+
+  let selectItems = question.choices.map((choice) => (
+    <MenuItem value={choice}>{choice}</MenuItem>
+  ));
+  return (
+    <>
+      <pre>{question.prompt}</pre>
+      <FormControl className={classes.formControl}>
+        <InputLabel id="demo-simple-select-label">Please Select</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={treattype}
+          onChange={(e) => {
+            setTreattype(e.target.value);
+            dispatch({
+              type: "ADD_ANSWER",
+              payload: { treattype: e.target.value },
+            });
+          }}
+        >
+          {selectItems}
+        </Select>
+      </FormControl>
+    </>
+  );
+};
+
+export default TreatTypeSelect;

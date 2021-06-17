@@ -10,6 +10,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import TextField from "@material-ui/core/TextField";
+
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -21,14 +23,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CupConeSelect = ({ rerouteToHome }) => {
+const ScoopFlavorSelect = ({ rerouteToHome }) => {
   const [questions] = useContext(QuestionsContext);
   const [route] = useContext(RoutingContext);
   const [answers, dispatch] = useContext(AnswersContext);
-  const [cupcone, setCupCone] = useState(answers[route]);
+  const [scoopflavor, setScoopFlavor] = useState(answers[route]);
+ 
 
   useEffect(() => {
-    setCupCone(answers[route]);
+    setScoopFlavor(answers[route]);
     if (!answers.email) rerouteToHome();
   }, [answers, rerouteToHome, route]);
 
@@ -39,6 +42,7 @@ const CupConeSelect = ({ rerouteToHome }) => {
   let selectItems = question.choices.map((choice) => (
     <MenuItem value={choice}>{choice}</MenuItem>
   ));
+  selectItems.push(<MenuItem value="Other">Other</MenuItem>);
   return (
     <>
       <pre>{question.prompt}</pre>
@@ -47,20 +51,23 @@ const CupConeSelect = ({ rerouteToHome }) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={cupcone}
+          value={scoopflavor}
           onChange={(e) => {
-            setCupCone(e.target.value);
+            setScoopFlavor(e.target.value);
             dispatch({
               type: "ADD_ANSWER",
-              payload: { cupcone: e.target.value },
+              payload: { scoopflavor: e.target.value },
             });
           }}
         >
           {selectItems}
         </Select>
       </FormControl>
+      {scoopflavor === "Other" && <form noValidate autoComplete="off">
+        <TextField id="topping_other" label="Other" />
+      </form>}
     </>
   );
 };
 
-export default CupConeSelect;
+export default ScoopFlavorSelect;
