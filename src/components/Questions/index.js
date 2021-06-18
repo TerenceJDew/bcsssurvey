@@ -11,6 +11,7 @@ import {
   AnswersContext,
   QuestionsContext,
   RoutingContext,
+  ProgressContext
 } from "../../store/store";
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +38,7 @@ const Questions = () => {
   const [questions, setQuestions] = useContext(QuestionsContext);
   const [page, setPage] = useContext(RoutingContext);
   const [answers, dispatch] = useContext(AnswersContext);
+  const [isNextReady, ] = useContext(ProgressContext)
   const [userDidSubmit, setUserDidSubmit] = useState(false);
   const path = usePath(false);
 
@@ -101,6 +103,7 @@ const Questions = () => {
           onClick={progressPage}
           className={classes.root}
           variant="outlined"
+          disabled={!isNextReady}
         >
           {" "}
           {page === "index" ? "Begin Survey" : "Next"}

@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useContext, useEffect, useState } from "react";
 
-
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -11,6 +10,7 @@ import {
   QuestionsContext,
   RoutingContext,
   AnswersContext,
+  ProgressContext,
 } from "../../../store/store";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,9 +27,11 @@ const CupConeSelect = ({ rerouteToHome }) => {
   const [questions] = useContext(QuestionsContext);
   const [route] = useContext(RoutingContext);
   const [answers, dispatch] = useContext(AnswersContext);
+  const [, setIsNextReady] = useContext(ProgressContext);
   const [cupcone, setCupCone] = useState(answers[route]);
 
   useEffect(() => {
+    if (!answers[route]) setIsNextReady(false);
     setCupCone(answers[route]);
     if (!answers.email) rerouteToHome();
   }, [answers, rerouteToHome, route]);
@@ -54,6 +56,7 @@ const CupConeSelect = ({ rerouteToHome }) => {
           value={cupcone}
           onChange={(e) => {
             setCupCone(e.target.value);
+            setIsNextReady(true);
             dispatch({
               type: "ADD_ANSWER",
               payload: { cupcone: e.target.value },

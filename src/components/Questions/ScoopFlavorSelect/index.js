@@ -4,6 +4,7 @@ import {
   QuestionsContext,
   RoutingContext,
   AnswersContext,
+  ProgressContext,
 } from "../../../store/store";
 
 import InputLabel from "@material-ui/core/InputLabel";
@@ -26,10 +27,12 @@ const ScoopFlavorSelect = ({ rerouteToHome }) => {
   const [questions] = useContext(QuestionsContext);
   const [route] = useContext(RoutingContext);
   const [answers, dispatch] = useContext(AnswersContext);
+  const [, setIsNextReady] = useContext(ProgressContext);
   const [scoopflavor, setScoopFlavor] = useState(answers[route]);
   const [isOther, setIsOther] = useState(false);
 
   useEffect(() => {
+    if (!answers[route]) setIsNextReady(false);
     setScoopFlavor(answers[route]);
     if (!answers.email) rerouteToHome();
   }, [answers, rerouteToHome, route]);
@@ -57,6 +60,7 @@ const ScoopFlavorSelect = ({ rerouteToHome }) => {
             setScoopFlavor(e.target.value);
             if (e.target.value === "Other") setIsOther(true);
             else setIsOther(false);
+            setIsNextReady(true);
             dispatch({
               type: "ADD_ANSWER",
               payload: { scoopflavor: e.target.value },

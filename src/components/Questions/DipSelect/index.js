@@ -11,6 +11,7 @@ import {
   QuestionsContext,
   RoutingContext,
   AnswersContext,
+  ProgressContext
 } from "../../../store/store";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,9 +28,11 @@ const DipSelect = ({ rerouteToHome }) => {
   const [questions] = useContext(QuestionsContext);
   const [route] = useContext(RoutingContext);
   const [answers, dispatch] = useContext(AnswersContext);
+  const [, setIsNextReady ] = useContext(ProgressContext)
   const [dip, setDip] = useState(answers[route]);
 
   useEffect(() => {
+    if(!answers[route]) setIsNextReady(false);
     setDip(answers[route]);
     if (!answers.email) rerouteToHome();
   }, [answers, rerouteToHome, route]);
@@ -54,6 +57,7 @@ const DipSelect = ({ rerouteToHome }) => {
           value={dip}
           onChange={(e) => {
             setDip(e.target.value);
+            setIsNextReady(true);
             dispatch({ type: "ADD_ANSWER", payload: { dip: e.target.value } });
           }}
         >

@@ -1,9 +1,7 @@
 import { useRoutes, navigate } from "hookrouter";
 import NotFound from "../NotFound";
-import routes from "./routes"
+import routes from "./routes";
 import "./index.css";
-
-
 
 const Container = () => {
   const Match = useRoutes(routes);
@@ -25,7 +23,7 @@ const Container = () => {
         <div className="question-container">
           {Match(updateEmail) || <NotFound></NotFound>}
         </div>
-        <div className="bottom-bg-div"></div>
+        <div className="bottom-bg-div"><pre>Big Corporation Scoop Shop © 2021 </pre></div>
       </div>
     </>
   );

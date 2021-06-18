@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useContext, useEffect, useState } from "react";
 
-
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -12,6 +11,7 @@ import {
   QuestionsContext,
   RoutingContext,
   AnswersContext,
+  ProgressContext,
 } from "../../../store/store";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,10 +28,12 @@ const TreatTypeSelect = ({ rerouteToHome }) => {
   const [questions] = useContext(QuestionsContext);
   const [route] = useContext(RoutingContext);
   const [answers, dispatch] = useContext(AnswersContext);
+  const [, setIsNextReady] = useContext(ProgressContext);
   const [topping, setTopping] = useState(answers[route]);
   const [isOther, setIsOther] = useState(false);
 
   useEffect(() => {
+    if (!answers[route]) setIsNextReady(false);
     setTopping(answers[route]);
     if (!answers.email) rerouteToHome();
   }, [answers, rerouteToHome, route]);
@@ -60,6 +62,7 @@ const TreatTypeSelect = ({ rerouteToHome }) => {
             setTopping(e.target.value);
             if (e.target.value === "Other") setIsOther(true);
             else setIsOther(false);
+            setIsNextReady(true);
             dispatch({
               type: "ADD_ANSWER",
               payload: { topping: e.target.value },

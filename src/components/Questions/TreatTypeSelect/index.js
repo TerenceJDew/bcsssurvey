@@ -11,6 +11,7 @@ import {
   QuestionsContext,
   RoutingContext,
   AnswersContext,
+  ProgressContext
 } from "../../../store/store";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,9 +28,11 @@ const TreatTypeSelect = ({ rerouteToHome }) => {
   const [questions] = useContext(QuestionsContext);
   const [route] = useContext(RoutingContext);
   const [answers, dispatch] = useContext(AnswersContext);
+  const [, setIsNextReady ] = useContext(ProgressContext)
   const [treattype, setTreattype] = useState(answers[route]);
 
   useEffect(() => {
+    if(!answers[route]) setIsNextReady(false);
     setTreattype(answers[route]);
     if (!answers.email) rerouteToHome();
   }, [answers, route, rerouteToHome]);
@@ -52,6 +55,7 @@ const TreatTypeSelect = ({ rerouteToHome }) => {
           value={treattype}
           onChange={(e) => {
             setTreattype(e.target.value);
+            setIsNextReady(true)
             dispatch({
               type: "ADD_ANSWER",
               payload: { treattype: e.target.value },
