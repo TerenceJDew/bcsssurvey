@@ -1,14 +1,9 @@
 import { useRoutes, navigate } from "hookrouter";
-import Registration from "../Registration";
-import Questions from "../Questions";
 import NotFound from "../NotFound";
-
+import routes from "./routes"
 import "./index.css";
 
-const routes = {
-  "/": () => (updateEmail) => <Registration updateEmail={updateEmail} />,
-  "/survey*": () => () => <Questions />,
-};
+
 
 const Container = () => {
   const Match = useRoutes(routes);
@@ -22,9 +17,9 @@ const Container = () => {
       <div className="container">
         <div className="grid">
           <img
-            style={{ height: "50px", width: "50px" }}
+            style={{ height: "100px", width: "180px" }}
             alt="Home icon"
-            src="https://image.flaticon.com/icons/png/512/686/686407.png"
+            src="https://drive.google.com/uc?id=1Z4_EoZe9BSxjx5twtY2W5lMrpnODMY-5"
           ></img>
         </div>
         <div className="question-container">
