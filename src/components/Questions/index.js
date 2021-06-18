@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import { useRoutes, navigate, usePath } from "hookrouter";
 import { useContext, useEffect, useState } from "react";
-import pageLookup from "../../utils/pagelookup"
+import pageLookup from "../../utils/pagelookup";
 import routes from "./routes";
 
 import NotFound from "../NotFound";
@@ -43,8 +43,6 @@ const Questions = () => {
   let classes = useStyles();
   let currentQuestion = questions[page] || {};
 
-  
-
   useEffect(() => {
     let uri = path.split("/")[2];
     if (uri === undefined || uri === "") uri = "index";
@@ -72,7 +70,7 @@ const Questions = () => {
   }, []);
 
   const progressPage = () => {
-    let uri = pageLookup(page,answers);
+    let uri = pageLookup(page, answers);
     navigateFromURI(uri);
     setPage(uri);
   };

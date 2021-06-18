@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+# Welcome to React Fundamentals!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Before attending the workshop, please make sure you can run the apps in this repository.
 
-## Available Scripts
+## Step 1 - Dependencies
 
-In the project directory, you can run:
+You will need:
 
-### `yarn start`
+- [Git](http://git-scm.com/downloads)
+- [node](https://nodejs.org/)
+- [yarn](https://yarnpkg.com/en/docs/install)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Step 2 - Clone the repository:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+From the command line, clone the repository:
 
-### `yarn test`
+```sh
+$ git clone https://github.com/TerenceJDew/bcsssurvey.git
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+If you are using yarn run from the root of the repository:
 
-### `yarn build`
+```sh
+yarn
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Step 4 - Run an app
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Once the dependencies are installed, you can run the app:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+````sh
+cd bcsssurvey
+yarn start
 
-### `yarn eject`
+Your browser should open up to a running app.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Troubleshooting
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+A few common problems:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* **You're having problems cloning the repository.** Some corporate networks block port 22, which git uses to communicate with GitHub over SSH. Instead of using SSH, clone the repo over HTTPS. Use the following command to tell git to always use `https` instead of `git`:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```sh
+$ git config --global url."https://".insteadOf git://
 
-## Learn More
+# This adds the following to your `~/.gitconfig`:
+[url "https://"]
+  insteadOf = git://
+````
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **You're having trouble installing node.** We recommend using [nvm](https://github.com/creationix/nvm). nvm makes it really easy to use multiple versions of node on the same machine painlessly. After you install nvm, install the latest stable version of node with the following command:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```sh
+$ nvm use default stable
+```
 
-### Code Splitting
+- **You don't have permissions to install stuff.** You might see an error like `EACCES` during the `npm install` step. If that's the case, it probably means that at some point you did an `sudo npm install` and installed some stuff with root permissions. To fix this, you need to forcefully remove all files that npm caches on your machine and re-install without sudo.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```sh
+$ sudo rm -rf node_modules
 
-### Analyzing the Bundle Size
+# If you installed node with nvm (suggested):
+$ sudo rm -rf ~/.npm
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+# If you installed node with Homebrew:
+$ sudo rm -rf /usr/local/lib/node_modules
 
-### Making a Progressive Web App
+# Then (look ma, no sudo!):
+$ npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### License
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This material is available for private, non-commercial use under the [GPL version 3](http://www.gnu.org/licenses/gpl-3.0-standalone.html). If you would like to use this material to conduct your own workshop, please contact me at ryan@workshop.me.
