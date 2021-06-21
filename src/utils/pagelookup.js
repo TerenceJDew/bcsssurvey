@@ -1,3 +1,5 @@
+// Lookup table for page routes. Key is the current 
+// page uri and value is the next page.
 const selectNextPage = (page, answers) => {
     let uriLookup = {
       index: "treattype",

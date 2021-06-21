@@ -11,7 +11,7 @@ import {
   AnswersContext,
   QuestionsContext,
   RoutingContext,
-  ProgressContext
+  ProgressContext,
 } from "../../store/store";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +38,7 @@ const Questions = () => {
   const [questions, setQuestions] = useContext(QuestionsContext);
   const [page, setPage] = useContext(RoutingContext);
   const [answers, dispatch] = useContext(AnswersContext);
-  const [isNextReady, ] = useContext(ProgressContext)
+  const [isNextReady] = useContext(ProgressContext);
   const [userDidSubmit, setUserDidSubmit] = useState(false);
   const path = usePath(false);
 
@@ -46,12 +46,14 @@ const Questions = () => {
   let currentQuestion = questions[page] || {};
 
   useEffect(() => {
+    // Initial route loading
     let uri = path.split("/")[2];
     if (uri === undefined || uri === "") uri = "index";
     setPage(uri);
   }, []);
 
   useEffect(() => {
+    // Get questions from the api and if there are answers populate the state hook with them.
     let updateQuestionStore = (questionList) => {
       setQuestions(questionList);
       if (questionList.answers && !answers.treattype) {
@@ -63,6 +65,8 @@ const Questions = () => {
 
     const emailQuery = answers.email;
     if (emailQuery)
+      // Ran out of time but wanted to build an adapter
+      // for axios third party instead of in component dependency
       axios
         .get(`http://localhost:5000/questions?email=${emailQuery}`)
         .then((response) => response.data)

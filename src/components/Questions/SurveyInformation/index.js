@@ -1,10 +1,8 @@
 import { useEffect, useContext } from "react";
-import { AnswersContext, RoutingContext } from "../../../store/store";
+import { AnswersContext } from "../../../store/store";
 
 const SurveyInformation = ({ rerouteToHome }) => {
-
-  const [route] = useContext(RoutingContext);
-  const [answers, dispatch] = useContext(AnswersContext);
+  const [answers] = useContext(AnswersContext);
 
   useEffect(() => {
     if (!answers.email) rerouteToHome();

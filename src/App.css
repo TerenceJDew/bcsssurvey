@@ -1,22 +1,22 @@
-h2{
+h2 {
   color: #121212;
   text-align: center;
 }
 
-h3{
-  background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
+h3 {
+  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
   text-align: center;
   text-transform: uppercase;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-h4{
+h4 {
   color: #121212;
   text-align: center;
 }
 
-pre{
+pre {
   color: #f2f2f2;
   font-weight: 600;
 }
