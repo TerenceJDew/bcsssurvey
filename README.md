@@ -1,6 +1,4 @@
-# Welcome to React Fundamentals!
 
-Before attending the workshop, please make sure you can run the apps in this repository.
 
 ## Step 1 - Dependencies
 
@@ -60,15 +58,11 @@ $ nvm use default stable
 $ sudo rm -rf node_modules
 
 # If you installed node with nvm (suggested):
-$ sudo rm -rf ~/.npm
+$ rm -rf ~/.npm
 
 # If you installed node with Homebrew:
 $ sudo rm -rf /usr/local/lib/node_modules
 
-# Then (look ma, no sudo!):
 $ npm install
 ```
 
-### License
-
-This material is available for private, non-commercial use under the [GPL version 3](http://www.gnu.org/licenses/gpl-3.0-standalone.html). If you would like to use this material to conduct your own workshop, please contact me at ryan@workshop.me.
