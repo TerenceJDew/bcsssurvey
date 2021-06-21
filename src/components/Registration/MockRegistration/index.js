@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//Form verification 
 let loginSchema = yup.object().shape({
   email: yup
     .string()
